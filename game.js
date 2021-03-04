@@ -83,6 +83,9 @@ document.addEventListener("keydown", function(event) {
 function draw() {
     for(let i=0; i<snake.length; i++) {
         ctx.fillStyle = (i == 0) ? "black" : "green";
+        if( i % 2 == 0 ) {
+            ctx.fillStyle = "black";
+        }
         ctx.fillRect (snake[i].x, snake[i].y, box, box);
         ctx.strokeStyle = "#000000";
         ctx.strokeRect(snake[i].x, snake[i].y, box, box);
@@ -131,12 +134,20 @@ function draw() {
         return false;
     }
 
+    function dragon() {
+        let dragon1 = document.getElementById("dragon1");
+        let dragon2 = document.getElementById("dragon2");
+        dragon1.style.display = "block";
+        dragon2.style.display = "block";
+    } 
+
     //Gameover logic
     if(snakeX < box || snakeX > box*17 || snakeY < box*3 || snakeY > box*17 || collision(newHead, snake)) {
+        dragon();
         dead.play();
         clearInterval(game);
         ctx.drawImage(gameover, 0, 0, 512, 371, cvs.width/2 - 100, cvs.height/2 - 100, 200, 200);
-        score = false;
+        sound = false;
     }
 
     snake.unshift(newHead);
@@ -155,4 +166,4 @@ function loop() {
     draw();
 }
 
-let game = setInterval(loop, 100);
+let game = setInterval(loop, 120);
